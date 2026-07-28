@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<button onclick="envoyer()">Envoyer test</button>
+
+<script>
+
+async function envoyer(){
+
+const webhook = "TON_WEBHOOK_ICI";
+
+
+const message = {
+
+content:"✅ Test webhook Nova Recruit"
+
+};
+
+
+fetch(webhook,{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify(message)
+
+})
+.then(()=>{
+
+alert("Envoyé");
+
+})
+.catch(()=>{
+
+alert("Erreur");
+
+});
+
+
+}
+
+</script>
+
+</body>
+</html>
