@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* ---------- VOTRE CSS EXACT (copié) ---------- */
+        /* ---------- CSS EXACT (copié) ---------- */
         *{
             margin:0;
             padding:0;
@@ -385,6 +385,13 @@
             color:var(--text-dim);
         }
 
+        .field .hint{
+            font-size:11px;
+            color:var(--text-dim);
+            opacity:0.7;
+            margin-top:2px;
+        }
+
         input,
         textarea{
             padding:15px 16px;
@@ -412,6 +419,12 @@
         textarea{
             height:150px;
             resize:none;
+        }
+
+        .row-duo{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:16px;
         }
 
         #compteur{
@@ -521,6 +534,9 @@
             #contact form{
                 padding:26px;
             }
+            .row-duo{
+                grid-template-columns:1fr;
+            }
         }
         /* ---------- FIN CSS ---------- */
     </style>
@@ -554,7 +570,7 @@
             Des idées aux interfaces, propulsez vos projets avec une esthétique
             stellaire et des interactions sans friction.
         </p>
-        <a href="#contact" class="cta">→ Démarrer</a>
+        <a href="#contact" class="cta">→ Rejoindre Nova</a>
         <div class="scroll-cue" aria-hidden="true"><span></span></div>
     </section>
 
@@ -583,28 +599,49 @@
         </div>
     </section>
 
-    <!-- CONTACT (formulaire interactif) -->
+    <!-- CONTACT (Formulaire de recrutement) -->
     <section id="contact">
-        <h2 class="section-title">📡 Contact</h2>
+        <h2 class="section-title">🚀 Rejoindre Nova</h2>
         <form id="contact-form" novalidate>
+            <!-- PRÉNOM -->
             <div class="field">
-                <label for="name">Nom / Projet</label>
-                <input type="text" id="name" placeholder="ex: Nova Corp" required>
+                <label for="prenom">Prénom</label>
+                <input type="text" id="prenom" placeholder="ex: Alex" maxlength="10" required>
+                <span class="hint">10 caractères maximum</span>
             </div>
+
+            <!-- ÂGE -->
             <div class="field">
-                <label for="email">Email</label>
-                <input type="email" id="email" placeholder="vous@exemple.fr" required>
+                <label for="age">Âge</label>
+                <input type="number" id="age" placeholder="ex: 16" min="10" max="99" required>
+                <span class="hint">2 chiffres maximum (ex: 16)</span>
             </div>
+
+            <!-- PSEUDO ROBLOX -->
             <div class="field">
-                <label for="message">Message</label>
-                <textarea id="message" placeholder="Racontez-nous votre idée…" maxlength="280" required></textarea>
-                <span id="compteur">0 / 280</span>
+                <label for="pseudo_roblox">Pseudo Roblox</label>
+                <input type="text" id="pseudo_roblox" placeholder="ex: Nova_Player" maxlength="30" required>
+                <span class="hint">30 caractères maximum</span>
+            </div>
+
+            <!-- PSEUDO DISCORD -->
+            <div class="field">
+                <label for="pseudo_discord">Pseudo Discord</label>
+                <input type="text" id="pseudo_discord" placeholder="ex: nova#1234" maxlength="30" required>
+                <span class="hint">30 caractères maximum</span>
+            </div>
+
+            <!-- PRÉSENTATION -->
+            <div class="field">
+                <label for="presentation">Présentez-vous et dites pourquoi vous voulez nous rejoindre</label>
+                <textarea id="presentation" placeholder="Parlez-nous de vous, vos compétences, vos passions, et pourquoi Nova..." maxlength="500" required></textarea>
+                <span id="compteur">0 / 500</span>
             </div>
 
             <div id="form-status"></div>
 
             <button type="submit" id="submit-btn">
-                <span class="btn-label">Envoyer</span>
+                <span class="btn-label">Envoyer ma candidature</span>
                 <span class="btn-spinner"></span>
             </button>
         </form>
@@ -622,17 +659,19 @@
 
             // ---- ÉLÉMENTS ----
             const form = document.getElementById('contact-form');
-            const nameInput = document.getElementById('name');
-            const emailInput = document.getElementById('email');
-            const messageInput = document.getElementById('message');
+            const prenomInput = document.getElementById('prenom');
+            const ageInput = document.getElementById('age');
+            const pseudoRobloxInput = document.getElementById('pseudo_roblox');
+            const pseudoDiscordInput = document.getElementById('pseudo_discord');
+            const presentationInput = document.getElementById('presentation');
             const compteur = document.getElementById('compteur');
             const statusDiv = document.getElementById('form-status');
             const submitBtn = document.getElementById('submit-btn');
 
-            // ---- COMPTEUR DE CARACTÈRES ----
+            // ---- COMPTEUR DE CARACTÈRES (500 max) ----
             function updateCounter() {
-                const max = 280;
-                const current = messageInput.value.length;
+                const max = 500;
+                const current = presentationInput.value.length;
                 compteur.textContent = `${current} / ${max}`;
                 if (current >= max) {
                     compteur.classList.add('limit');
@@ -641,60 +680,122 @@
                 }
             }
 
-            messageInput.addEventListener('input', updateCounter);
-            // initialisation
+            presentationInput.addEventListener('input', updateCounter);
             updateCounter();
 
-            // ---- SIMULATION D'ENVOI (avec validation) ----
+            // ---- VALIDATION EN TEMPS RÉEL POUR L'ÂGE ----
+            ageInput.addEventListener('input', function() {
+                if (this.value.length > 2) {
+                    this.value = this.value.slice(0, 2);
+                }
+            });
+
+            // ---- SOUMISSION DU FORMULAIRE ----
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
 
-                // Réinitialiser le statut
                 statusDiv.className = '';
                 statusDiv.textContent = '';
 
-                // Validation simple
-                const name = nameInput.value.trim();
-                const email = emailInput.value.trim();
-                const message = messageInput.value.trim();
+                // Récupération des valeurs
+                const prenom = prenomInput.value.trim();
+                const age = ageInput.value.trim();
+                const pseudoRoblox = pseudoRobloxInput.value.trim();
+                const pseudoDiscord = pseudoDiscordInput.value.trim();
+                const presentation = presentationInput.value.trim();
 
-                if (!name || !email || !message) {
+                // --- VALIDATIONS ---
+                if (!prenom) {
                     statusDiv.className = 'error';
-                    statusDiv.textContent = '⚠️ Tous les champs sont requis.';
+                    statusDiv.textContent = '⚠️ Veuillez entrer votre prénom.';
+                    prenomInput.focus();
                     return;
                 }
 
-                if (!email.includes('@') || !email.includes('.')) {
+                if (prenom.length > 10) {
                     statusDiv.className = 'error';
-                    statusDiv.textContent = '⚠️ Adresse email invalide.';
+                    statusDiv.textContent = '⚠️ Le prénom ne peut pas dépasser 10 caractères.';
+                    prenomInput.focus();
                     return;
                 }
 
-                // Désactiver le bouton + spinner
+                if (!age) {
+                    statusDiv.className = 'error';
+                    statusDiv.textContent = '⚠️ Veuillez entrer votre âge.';
+                    ageInput.focus();
+                    return;
+                }
+
+                const ageNum = parseInt(age);
+                if (isNaN(ageNum) || ageNum < 10 || ageNum > 99) {
+                    statusDiv.className = 'error';
+                    statusDiv.textContent = '⚠️ Âge invalide (10-99 ans).';
+                    ageInput.focus();
+                    return;
+                }
+
+                if (!pseudoRoblox) {
+                    statusDiv.className = 'error';
+                    statusDiv.textContent = '⚠️ Veuillez entrer votre pseudo Roblox.';
+                    pseudoRobloxInput.focus();
+                    return;
+                }
+
+                if (pseudoRoblox.length > 30) {
+                    statusDiv.className = 'error';
+                    statusDiv.textContent = '⚠️ Le pseudo Roblox ne peut pas dépasser 30 caractères.';
+                    pseudoRobloxInput.focus();
+                    return;
+                }
+
+                if (!pseudoDiscord) {
+                    statusDiv.className = 'error';
+                    statusDiv.textContent = '⚠️ Veuillez entrer votre pseudo Discord.';
+                    pseudoDiscordInput.focus();
+                    return;
+                }
+
+                if (pseudoDiscord.length > 30) {
+                    statusDiv.className = 'error';
+                    statusDiv.textContent = '⚠️ Le pseudo Discord ne peut pas dépasser 30 caractères.';
+                    pseudoDiscordInput.focus();
+                    return;
+                }
+
+                if (!presentation) {
+                    statusDiv.className = 'error';
+                    statusDiv.textContent = '⚠️ Veuillez vous présenter.';
+                    presentationInput.focus();
+                    return;
+                }
+
+                if (presentation.length > 500) {
+                    statusDiv.className = 'error';
+                    statusDiv.textContent = '⚠️ La présentation ne peut pas dépasser 500 caractères.';
+                    presentationInput.focus();
+                    return;
+                }
+
+                // --- SIMULATION D'ENVOI ---
                 submitBtn.disabled = true;
                 submitBtn.classList.add('loading');
 
-                // Simuler un délai réseau
                 setTimeout(function() {
-                    // Succès (simulé)
                     statusDiv.className = 'success';
-                    statusDiv.textContent = '✅ Message envoyé (simulation) !';
+                    statusDiv.textContent = '✅ Candidature envoyée avec succès ! Nous vous contacterons bientôt.';
 
-                    // Réinitialiser le formulaire
                     form.reset();
                     updateCounter();
 
-                    // Réactiver le bouton
                     submitBtn.disabled = false;
                     submitBtn.classList.remove('loading');
 
-                    // Effacer le message de succès après 4s
                     setTimeout(() => {
                         statusDiv.className = '';
                         statusDiv.textContent = '';
-                    }, 4000);
+                    }, 5000);
 
-                }, 1600);
+                }, 1800);
             });
 
         })();
