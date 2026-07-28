@@ -1,4 +1,4 @@
-const WEBHOOK_URL = "https://discord.com/api/webhooks/1515735682172059648/Dw2flP7ipuG10pzMvq1ExS06enrA8Ih9_-ax2PQrkGpodHrcd6rAQKnQs2eegT_RLO6w";
+const WEBHOOK_URL = "https://discord.com/api/webhooks/1498364123988103360/69deM-_QKIeMsbU_t91pMFhSwenILmJcWPHoANmChO0YhhVV09Q9MQGOyK9rDbQUxgqj";
 
 
 const presentation = document.getElementById("presentation");
@@ -13,27 +13,20 @@ presentation.addEventListener("input", function(){
 
 
 
-
 document.querySelector("form").addEventListener("submit", async function(e){
 
     e.preventDefault();
 
 
-
     const prenom = document.getElementById("prenom").value;
-
     const age = document.getElementById("age").value;
-
     const roblox = document.getElementById("roblox").value;
-
     const discord = document.getElementById("discord").value;
-
     const presentation = document.getElementById("presentation").value;
 
 
 
-
-    const message = {
+    const data = {
 
         username: "Nova Recruit",
 
@@ -43,7 +36,7 @@ document.querySelector("form").addEventListener("submit", async function(e){
 
                 title: "📩 Nouvelle candidature",
 
-                color: 3447003,
+                description: "Une nouvelle personne a envoyé une candidature.",
 
                 fields: [
 
@@ -81,7 +74,7 @@ document.querySelector("form").addEventListener("submit", async function(e){
 
                 footer: {
 
-                    text: "Système de recrutement"
+                    text: "Nova Recruit"
 
                 }
 
@@ -93,13 +86,9 @@ document.querySelector("form").addEventListener("submit", async function(e){
 
 
 
-
-
-    const reponse = await fetch(WEBHOOK_URL, {
-
+    fetch(WEBHOOK_URL, {
 
         method: "POST",
-
 
         headers: {
 
@@ -107,37 +96,35 @@ document.querySelector("form").addEventListener("submit", async function(e){
 
         },
 
+        body: JSON.stringify(data)
 
-        body: JSON.stringify(message)
+    })
+    .then(response => {
 
+        if(response.ok){
+
+            alert("Candidature envoyée !");
+
+            document.querySelector("form").reset();
+
+            compteur.textContent = "0/250";
+
+        } 
+        
+        else {
+
+            alert("Erreur d'envoi.");
+
+        }
+
+    })
+    .catch(error => {
+
+        alert("Erreur de connexion.");
+
+        console.log(error);
 
     });
-
-
-
-
-
-    if(reponse.ok){
-
-
-        alert("Candidature envoyée !");
-
-
-        this.reset();
-
-
-        compteur.textContent = "0/250";
-
-
-    }
-
-    else{
-
-
-        alert("Erreur lors de l'envoi.");
-
-    }
-
 
 
 });
