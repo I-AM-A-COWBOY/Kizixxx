@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Nova Recruit</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<h1>Nova Recruit</h1>
+
+<nav>
+
+<a href="#">Accueil</a>
+<a href="#offres">Offres</a>
+<a href="#contact">Recrutement</a>
+
+</nav>
+
+</header>
+
+
+
+
+<section class="hero">
+
+<h2>Le recrutement nouvelle génération</h2>
+
+<p>Rejoignez notre équipe dès aujourd'hui.</p>
+
+</section>
+
+
+
+
+
+<section id="offres">
+
+<h2>Nos offres</h2>
+
+
+<div class="cards">
+
+
+<div class="card">
+
+<h3>Développeur</h3>
+
+<p>Création et amélioration de projets.</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>Modérateur</h3>
+
+<p>Aide la communauté et surveille le serveur.</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>Administrateur</h3>
+
+<p>Gestion du projet.</p>
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+<section id="contact">
+
+
+<h2>Déposer une candidature</h2>
+
+
+
+<form>
+
+
+
+<input
+
+type="text"
+
+id="prenom"
+
+placeholder="Prénom"
+
+maxlength="10"
+
+required>
+
+
+
+
+<input
+
+type="number"
+
+id="age"
+
+placeholder="Âge"
+
+oninput="if(this.value.length > 2) this.value=this.value.slice(0,2)"
+
+required>
+
+
+
+
+<input
+
+type="text"
+
+id="roblox"
+
+placeholder="Pseudo Roblox"
+
+maxlength="30"
+
+required>
+
+
+
+
+<input
+
+type="text"
+
+id="discord"
+
+placeholder="Pseudo Discord"
+
+maxlength="30"
+
+required>
+
+
+
+
+
+<textarea
+
+id="presentation"
+
+maxlength="250"
+
+placeholder="Présentez-vous et dites pourquoi vous souhaitez nous rejoindre"
+
+required></textarea>
+
+
+
+<p id="compteur">0/250</p>
+
+
+
+
+
+<button type="submit">
+
+Envoyer
+
+</button>
+
+
+
+
+</form>
+
+
+</section>
+
+
+
+
+
+
+<footer>
+
+© 2026 Nova Recruit
+
+</footer>
+
+
+
+
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
