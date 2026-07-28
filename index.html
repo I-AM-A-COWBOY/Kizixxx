@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* ---------- CSS EXACT (copié) ---------- */
+        /* ---------- CSS ---------- */
         *{
             margin:0;
             padding:0;
@@ -101,11 +101,6 @@
             background:radial-gradient(circle at 35% 35%, #fff, var(--nova-cyan) 40%, var(--nova-violet) 100%);
             box-shadow:0 0 12px var(--nova-cyan), 0 0 24px var(--nova-violet);
             animation:pulse-dot 2.4s ease-in-out infinite;
-        }
-
-        .brand-mark.small{
-            display:inline-block;
-            margin-bottom:10px;
         }
 
         @keyframes pulse-dot{
@@ -613,8 +608,8 @@
             <!-- ÂGE -->
             <div class="field">
                 <label for="age">Âge</label>
-                <input type="number" id="age" placeholder="ex: 16" min="10" max="99" required>
-                <span class="hint">2 chiffres maximum (ex: 16)</span>
+                <input type="number" id="age" placeholder="ex: 16" min="10" max="99" inputmode="numeric" pattern="[0-9]*" required>
+                <span class="hint">Entre 10 et 99 ans</span>
             </div>
 
             <!-- PSEUDO ROBLOX -->
@@ -685,8 +680,28 @@
 
             // ---- VALIDATION EN TEMPS RÉEL POUR L'ÂGE ----
             ageInput.addEventListener('input', function() {
+                // Supprimer tout caractère non numérique
+                this.value = this.value.replace(/\D/g, '');
+                
+                // Limiter à 2 chiffres
                 if (this.value.length > 2) {
                     this.value = this.value.slice(0, 2);
+                }
+                
+                // Vérifier la plage
+                const val = parseInt(this.value);
+                if (this.value.length === 2 && (val < 10 || val > 99)) {
+                    this.style.borderColor = 'var(--nova-flare)';
+                } else {
+                    this.style.borderColor = '';
+                }
+            });
+
+            // ---- EMPÊCHER LES FLÈCHES DU CHAMP NUMBER ----
+            ageInput.addEventListener('keydown', function(e) {
+                // Empêcher les touches fléchées de modifier la valeur
+                if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+                    e.preventDefault();
                 }
             });
 
@@ -780,12 +795,22 @@
                 submitBtn.disabled = true;
                 submitBtn.classList.add('loading');
 
+                // Simulation d'envoi
+                console.log('📝 Candidature envoyée :', {
+                    prenom,
+                    age: ageNum,
+                    pseudoRoblox,
+                    pseudoDiscord,
+                    presentation
+                });
+
                 setTimeout(function() {
                     statusDiv.className = 'success';
                     statusDiv.textContent = '✅ Candidature envoyée avec succès ! Nous vous contacterons bientôt.';
 
                     form.reset();
                     updateCounter();
+                    ageInput.style.borderColor = '';
 
                     submitBtn.disabled = false;
                     submitBtn.classList.remove('loading');
