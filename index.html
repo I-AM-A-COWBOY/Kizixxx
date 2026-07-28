@@ -1,220 +1,704 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova · Dreamweave</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ---------- VOTRE CSS EXACT (copié) ---------- */
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        :root{
+            --bg-deep:#050714;
+            --bg-panel:#0c1024;
+            --bg-panel-2:#111633;
+            --nova-violet:#7c5cff;
+            --nova-cyan:#2fe0d8;
+            --nova-flare:#ff7a5c;
+            --text-main:#e7e9f7;
+            --text-dim:#8891b8;
+            --border-soft:rgba(124,92,255,0.25);
+            --font-display:'Rajdhani',sans-serif;
+            --font-body:'Inter',sans-serif;
+        }
 
-<title>Nova Recruit</title>
+        html{
+            scroll-behavior:smooth;
+        }
 
-<link rel="stylesheet" href="style.css">
+        body{
+            background:var(--bg-deep);
+            color:var(--text-main);
+            font-family:var(--font-body);
+            position:relative;
+            overflow-x:hidden;
+        }
 
+        @media (prefers-reduced-motion: reduce){
+            *{
+                animation-duration:0.001ms !important;
+                animation-iteration-count:1 !important;
+                transition-duration:0.001ms !important;
+                scroll-behavior:auto !important;
+            }
+        }
+
+        .starfield{
+            position:fixed;
+            inset:0;
+            z-index:0;
+            pointer-events:none;
+            background-image:
+                radial-gradient(1.5px 1.5px at 20px 30px, #ffffff 100%, transparent 100%),
+                radial-gradient(1.5px 1.5px at 140px 90px, #ffffff 100%, transparent 100%),
+                radial-gradient(1px 1px at 260px 40px, #ffffff 100%, transparent 100%),
+                radial-gradient(1px 1px at 320px 180px, #ffffff 100%, transparent 100%),
+                radial-gradient(1.5px 1.5px at 400px 260px, #ffffff 100%, transparent 100%),
+                radial-gradient(1px 1px at 60px 220px, #ffffff 100%, transparent 100%),
+                radial-gradient(1.5px 1.5px at 480px 60px, #ffffff 100%, transparent 100%),
+                radial-gradient(1px 1px at 540px 320px, #ffffff 100%, transparent 100%);
+            background-repeat:repeat;
+            background-size:600px 400px;
+            opacity:0.5;
+            animation:drift 90s linear infinite;
+        }
+
+        @keyframes drift{
+            from{ background-position:0 0; }
+            to{ background-position:-600px 400px; }
+        }
+
+        header{
+            position:sticky;
+            top:0;
+            z-index:10;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:22px 60px;
+            background:rgba(5,7,20,0.75);
+            backdrop-filter:blur(10px);
+            border-bottom:1px solid var(--border-soft);
+        }
+
+        .brand{
+            display:flex;
+            align-items:center;
+            gap:12px;
+        }
+
+        .brand-mark{
+            width:14px;
+            height:14px;
+            border-radius:50%;
+            background:radial-gradient(circle at 35% 35%, #fff, var(--nova-cyan) 40%, var(--nova-violet) 100%);
+            box-shadow:0 0 12px var(--nova-cyan), 0 0 24px var(--nova-violet);
+            animation:pulse-dot 2.4s ease-in-out infinite;
+        }
+
+        .brand-mark.small{
+            display:inline-block;
+            margin-bottom:10px;
+        }
+
+        @keyframes pulse-dot{
+            0%,100%{ transform:scale(1); opacity:1; }
+            50%{ transform:scale(1.3); opacity:0.7; }
+        }
+
+        header h1{
+            font-family:var(--font-display);
+            font-weight:700;
+            font-size:22px;
+            letter-spacing:2px;
+            color:var(--text-main);
+        }
+
+        header h1 span{
+            color:var(--nova-cyan);
+            font-weight:600;
+        }
+
+        nav{
+            display:flex;
+            gap:34px;
+        }
+
+        nav a{
+            color:var(--text-dim);
+            text-decoration:none;
+            font-size:14px;
+            font-weight:500;
+            letter-spacing:0.5px;
+            text-transform:uppercase;
+            position:relative;
+            padding-bottom:4px;
+            transition:color 0.25s ease;
+        }
+
+        nav a::after{
+            content:'';
+            position:absolute;
+            left:0;
+            bottom:0;
+            width:0%;
+            height:1px;
+            background:linear-gradient(90deg,var(--nova-cyan),var(--nova-violet));
+            transition:width 0.3s ease;
+        }
+
+        nav a:hover{
+            color:var(--text-main);
+        }
+
+        nav a:hover::after{
+            width:100%;
+        }
+
+        .hero{
+            position:relative;
+            min-height:88vh;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+            text-align:center;
+            padding:40px 24px;
+            overflow:hidden;
+            isolation:isolate;
+        }
+
+        .nova-burst{
+            position:absolute;
+            top:50%;
+            left:50%;
+            width:900px;
+            height:900px;
+            transform:translate(-50%,-50%);
+            z-index:-1;
+            background:
+                radial-gradient(circle, rgba(124,92,255,0.35) 0%, rgba(47,224,216,0.12) 32%, transparent 65%);
+            filter:blur(10px);
+            animation:breathe 6s ease-in-out infinite;
+        }
+
+        @keyframes breathe{
+            0%,100%{ transform:translate(-50%,-50%) scale(1); }
+            50%{ transform:translate(-50%,-50%) scale(1.12); }
+        }
+
+        .eyebrow{
+            font-family:var(--font-display);
+            text-transform:uppercase;
+            letter-spacing:4px;
+            font-size:13px;
+            color:var(--nova-cyan);
+            margin-bottom:18px;
+        }
+
+        .eyebrow::before{
+            content:'\25C6  ';
+            color:var(--nova-violet);
+        }
+
+        .hero h2{
+            font-family:var(--font-display);
+            font-weight:700;
+            font-size:clamp(40px,7vw,74px);
+            line-height:1.05;
+            letter-spacing:1px;
+            margin-bottom:22px;
+        }
+
+        .hero h2 .glow{
+            background:linear-gradient(120deg,var(--nova-cyan),var(--nova-violet) 60%,var(--nova-flare));
+            -webkit-background-clip:text;
+            background-clip:text;
+            color:transparent;
+        }
+
+        .hero-sub{
+            max-width:520px;
+            font-size:18px;
+            color:var(--text-dim);
+            margin-bottom:38px;
+        }
+
+        .cta{
+            display:inline-block;
+            padding:16px 42px;
+            border-radius:999px;
+            background:linear-gradient(120deg,var(--nova-cyan),var(--nova-violet));
+            color:#050714;
+            font-family:var(--font-display);
+            font-weight:700;
+            font-size:16px;
+            letter-spacing:0.5px;
+            text-decoration:none;
+            box-shadow:0 0 0 1px rgba(255,255,255,0.08), 0 12px 30px rgba(124,92,255,0.35);
+            transition:transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .cta:hover{
+            transform:translateY(-3px);
+            box-shadow:0 0 0 1px rgba(255,255,255,0.12), 0 18px 40px rgba(47,224,216,0.4);
+        }
+
+        .scroll-cue{
+            position:absolute;
+            bottom:34px;
+            left:50%;
+            transform:translateX(-50%);
+            width:22px;
+            height:36px;
+            border:1.5px solid var(--border-soft);
+            border-radius:20px;
+        }
+
+        .scroll-cue span{
+            position:absolute;
+            top:6px;
+            left:50%;
+            transform:translateX(-50%);
+            width:4px;
+            height:8px;
+            border-radius:2px;
+            background:var(--nova-cyan);
+            animation:scroll-dot 1.8s ease-in-out infinite;
+        }
+
+        @keyframes scroll-dot{
+            0%{ top:6px; opacity:1; }
+            70%{ top:20px; opacity:0; }
+            100%{ top:6px; opacity:0; }
+        }
+
+        section{
+            position:relative;
+            z-index:1;
+            padding:100px 60px;
+            max-width:1200px;
+            margin:0 auto;
+        }
+
+        .section-title{
+            font-family:var(--font-display);
+            font-weight:700;
+            font-size:clamp(30px,4vw,42px);
+            margin-bottom:50px;
+        }
+
+        .cards{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+            gap:28px;
+        }
+
+        .card{
+            position:relative;
+            background:linear-gradient(160deg,var(--bg-panel-2),var(--bg-panel));
+            border:1px solid var(--border-soft);
+            padding:36px 30px;
+            border-radius:18px;
+            transition:transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card::before{
+            content:'';
+            position:absolute;
+            inset:0;
+            border-radius:18px;
+            padding:1px;
+            background:linear-gradient(160deg,var(--nova-cyan),transparent 40%);
+            -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite:xor;
+            mask-composite:exclude;
+            opacity:0;
+            transition:opacity 0.3s ease;
+        }
+
+        .card:hover{
+            transform:translateY(-6px);
+            border-color:transparent;
+            box-shadow:0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .card:hover::before{
+            opacity:1;
+        }
+
+        .card-icon{
+            font-family:var(--font-display);
+            font-size:22px;
+            color:var(--nova-cyan);
+            width:46px;
+            height:46px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            border-radius:12px;
+            background:rgba(47,224,216,0.08);
+            margin-bottom:20px;
+        }
+
+        .card h3{
+            font-family:var(--font-display);
+            font-size:22px;
+            font-weight:600;
+            margin-bottom:12px;
+        }
+
+        .card p{
+            color:var(--text-dim);
+            font-size:15px;
+            line-height:1.6;
+        }
+
+        #contact form{
+            display:flex;
+            flex-direction:column;
+            gap:22px;
+            max-width:560px;
+            background:rgba(12,16,36,0.5);
+            border:1px solid var(--border-soft);
+            padding:40px;
+            border-radius:20px;
+        }
+
+        .field{
+            display:flex;
+            flex-direction:column;
+            gap:8px;
+        }
+
+        .field label{
+            font-size:13px;
+            text-transform:uppercase;
+            letter-spacing:1px;
+            color:var(--text-dim);
+        }
+
+        input,
+        textarea{
+            padding:15px 16px;
+            border:1px solid transparent;
+            border-radius:12px;
+            background:var(--bg-panel-2);
+            color:var(--text-main);
+            font-family:var(--font-body);
+            font-size:15px;
+            outline:none;
+            transition:border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        input::placeholder,
+        textarea::placeholder{
+            color:#5c6491;
+        }
+
+        input:focus,
+        textarea:focus{
+            border-color:var(--nova-cyan);
+            box-shadow:0 0 0 3px rgba(47,224,216,0.15);
+        }
+
+        textarea{
+            height:150px;
+            resize:none;
+        }
+
+        #compteur{
+            align-self:flex-end;
+            font-size:12px;
+            color:var(--nova-cyan);
+            letter-spacing:0.5px;
+        }
+
+        #compteur.limit{
+            color:var(--nova-flare);
+        }
+
+        button{
+            position:relative;
+            padding:16px;
+            border:none;
+            border-radius:999px;
+            background:linear-gradient(120deg,var(--nova-cyan),var(--nova-violet));
+            color:#050714;
+            font-family:var(--font-display);
+            font-weight:700;
+            font-size:16px;
+            letter-spacing:0.5px;
+            cursor:pointer;
+            transition:transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+            box-shadow:0 12px 26px rgba(124,92,255,0.3);
+        }
+
+        button:hover{
+            transform:translateY(-2px);
+            box-shadow:0 16px 32px rgba(47,224,216,0.35);
+        }
+
+        button:disabled{
+            opacity:0.6;
+            cursor:not-allowed;
+            transform:none;
+        }
+
+        .btn-spinner{
+            display:none;
+            width:16px;
+            height:16px;
+            margin-left:10px;
+            border:2px solid rgba(5,7,20,0.3);
+            border-top-color:#050714;
+            border-radius:50%;
+            vertical-align:middle;
+            animation:spin 0.7s linear infinite;
+        }
+
+        button.loading .btn-spinner{
+            display:inline-block;
+        }
+
+        button.loading .btn-label{
+            opacity:0.7;
+        }
+
+        @keyframes spin{
+            to{ transform:rotate(360deg); }
+        }
+
+        #form-status{
+            min-height:20px;
+            font-size:14px;
+            text-align:center;
+        }
+
+        #form-status.success{
+            color:var(--nova-cyan);
+        }
+
+        #form-status.error{
+            color:var(--nova-flare);
+        }
+
+        footer{
+            position:relative;
+            z-index:1;
+            background:var(--bg-panel);
+            border-top:1px solid var(--border-soft);
+            padding:40px;
+            text-align:center;
+        }
+
+        footer p{
+            color:var(--text-dim);
+            font-size:13px;
+            letter-spacing:0.5px;
+        }
+
+        @media (max-width:720px){
+            header{
+                padding:18px 24px;
+            }
+            nav{
+                gap:18px;
+            }
+            nav a{
+                font-size:12px;
+            }
+            section{
+                padding:70px 24px;
+            }
+            #contact form{
+                padding:26px;
+            }
+        }
+        /* ---------- FIN CSS ---------- */
+    </style>
 </head>
-
-
 <body>
 
-
-<header>
-
-<h1>Nova Recruit</h1>
-
-<nav>
-
-<a href="#">Accueil</a>
-<a href="#offres">Offres</a>
-<a href="#contact">Recrutement</a>
-
-</nav>
-
-</header>
-
-
-
-
-<section class="hero">
-
-<h2>Le recrutement nouvelle génération</h2>
-
-<p>Rejoignez notre équipe dès aujourd'hui.</p>
-
-</section>
-
-
-
-
-
-<section id="offres">
-
-<h2>Nos offres</h2>
-
-
-<div class="cards">
-
-
-<div class="card">
-
-<h3>Développeur</h3>
-
-<p>Création et amélioration de projets.</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>Modérateur</h3>
-
-<p>Aide la communauté et surveille le serveur.</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>Administrateur</h3>
-
-<p>Gestion du projet.</p>
-
-</div>
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-
-<section id="contact">
-
-
-<h2>Déposer une candidature</h2>
-
-
-
-<form>
-
-
-
-<input
-
-type="text"
-
-id="prenom"
-
-placeholder="Prénom"
-
-maxlength="10"
-
-required>
-
-
-
-
-<input
-
-type="number"
-
-id="age"
-
-placeholder="Âge"
-
-oninput="if(this.value.length > 2) this.value=this.value.slice(0,2)"
-
-required>
-
-
-
-
-<input
-
-type="text"
-
-id="roblox"
-
-placeholder="Pseudo Roblox"
-
-maxlength="30"
-
-required>
-
-
-
-
-<input
-
-type="text"
-
-id="discord"
-
-placeholder="Pseudo Discord"
-
-maxlength="30"
-
-required>
-
-
-
-
-
-<textarea
-
-id="presentation"
-
-maxlength="250"
-
-placeholder="Présentez-vous et dites pourquoi vous souhaitez nous rejoindre"
-
-required></textarea>
-
-
-
-<p id="compteur">0/250</p>
-
-
-
-
-
-<button type="submit">
-
-Envoyer
-
-</button>
-
-
-
-
-</form>
-
-
-</section>
-
-
-
-
-
-
-<footer>
-
-© 2026 Nova Recruit
-
-</footer>
-
-
-
-
-
-<script src="script.js"></script>
-
+    <!-- Fond d'étoiles -->
+    <div class="starfield" aria-hidden="true"></div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="brand">
+            <div class="brand-mark" aria-hidden="true"></div>
+            <h1>NOVA<span>.</span></h1>
+        </div>
+        <nav>
+            <a href="#features">Capacités</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="nova-burst" aria-hidden="true"></div>
+        <div class="eyebrow">Nouvelle ère</div>
+        <h2>
+            Bâtissez l'<span class="glow">impossible</span><br>
+            en un souffle.
+        </h2>
+        <p class="hero-sub">
+            Des idées aux interfaces, propulsez vos projets avec une esthétique
+            stellaire et des interactions sans friction.
+        </p>
+        <a href="#contact" class="cta">→ Démarrer</a>
+        <div class="scroll-cue" aria-hidden="true"><span></span></div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features">
+        <h2 class="section-title">⚡ Capacités</h2>
+        <div class="cards">
+            <div class="card">
+                <div class="card-icon">✦</div>
+                <h3>Design quantique</h3>
+                <p>Des gradients néon, des ombres profondes et des animations
+                qui réagissent à l'expérience utilisateur.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">◈</div>
+                <h3>Interactions vives</h3>
+                <p>Chaque survol, chaque clic est amplifié par des transitions
+                fluides et une signature visuelle unique.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">⟡</div>
+                <h3>Performance stellaire</h3>
+                <p>Code minimal, animations optimisées et accessibilité
+                intégrée pour une expérience sans faille.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT (formulaire interactif) -->
+    <section id="contact">
+        <h2 class="section-title">📡 Contact</h2>
+        <form id="contact-form" novalidate>
+            <div class="field">
+                <label for="name">Nom / Projet</label>
+                <input type="text" id="name" placeholder="ex: Nova Corp" required>
+            </div>
+            <div class="field">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="vous@exemple.fr" required>
+            </div>
+            <div class="field">
+                <label for="message">Message</label>
+                <textarea id="message" placeholder="Racontez-nous votre idée…" maxlength="280" required></textarea>
+                <span id="compteur">0 / 280</span>
+            </div>
+
+            <div id="form-status"></div>
+
+            <button type="submit" id="submit-btn">
+                <span class="btn-label">Envoyer</span>
+                <span class="btn-spinner"></span>
+            </button>
+        </form>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2026 Nova — propulsé par l'audace.</p>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        (function() {
+            "use strict";
+
+            // ---- ÉLÉMENTS ----
+            const form = document.getElementById('contact-form');
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const messageInput = document.getElementById('message');
+            const compteur = document.getElementById('compteur');
+            const statusDiv = document.getElementById('form-status');
+            const submitBtn = document.getElementById('submit-btn');
+
+            // ---- COMPTEUR DE CARACTÈRES ----
+            function updateCounter() {
+                const max = 280;
+                const current = messageInput.value.length;
+                compteur.textContent = `${current} / ${max}`;
+                if (current >= max) {
+                    compteur.classList.add('limit');
+                } else {
+                    compteur.classList.remove('limit');
+                }
+            }
+
+            messageInput.addEventListener('input', updateCounter);
+            // initialisation
+            updateCounter();
+
+            // ---- SIMULATION D'ENVOI (avec validation) ----
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Réinitialiser le statut
+                statusDiv.className = '';
+                statusDiv.textContent = '';
+
+                // Validation simple
+                const name = nameInput.value.trim();
+                const email = emailInput.value.trim();
+                const message = messageInput.value.trim();
+
+                if (!name || !email || !message) {
+                    statusDiv.className = 'error';
+                    statusDiv.textContent = '⚠️ Tous les champs sont requis.';
+                    return;
+                }
+
+                if (!email.includes('@') || !email.includes('.')) {
+                    statusDiv.className = 'error';
+                    statusDiv.textContent = '⚠️ Adresse email invalide.';
+                    return;
+                }
+
+                // Désactiver le bouton + spinner
+                submitBtn.disabled = true;
+                submitBtn.classList.add('loading');
+
+                // Simuler un délai réseau
+                setTimeout(function() {
+                    // Succès (simulé)
+                    statusDiv.className = 'success';
+                    statusDiv.textContent = '✅ Message envoyé (simulation) !';
+
+                    // Réinitialiser le formulaire
+                    form.reset();
+                    updateCounter();
+
+                    // Réactiver le bouton
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('loading');
+
+                    // Effacer le message de succès après 4s
+                    setTimeout(() => {
+                        statusDiv.className = '';
+                        statusDiv.textContent = '';
+                    }, 4000);
+
+                }, 1600);
+            });
+
+        })();
+    </script>
 
 </body>
-
 </html>
