@@ -1,99 +1,220 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Nova Recruit</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
 <link rel="stylesheet" href="style.css">
+
 </head>
+
+
 <body>
 
-<div class="starfield" id="starfield"></div>
 
 <header>
-  <div class="brand">
-    <span class="brand-mark"></span>
-    <h1>NOVA<span>RECRUIT</span></h1>
-  </div>
-  <nav>
-    <a href="#accueil">Accueil</a>
-    <a href="#offres">Offres</a>
-    <a href="#contact">Recrutement</a>
-  </nav>
+
+<h1>Nova Recruit</h1>
+
+<nav>
+
+<a href="#">Accueil</a>
+<a href="#offres">Offres</a>
+<a href="#contact">Recrutement</a>
+
+</nav>
+
 </header>
 
-<section class="hero" id="accueil">
-  <div class="nova-burst" aria-hidden="true"></div>
-  <p class="eyebrow">Station de recrutement &mdash; ouverte</p>
-  <h2>Une équipe qui<br><span class="glow">brille fort.</span></h2>
-  <p class="hero-sub">Dev, modération, administration — trouve ta place dans l'équipage et construis avec nous.</p>
-  <a href="#contact" class="cta">Envoyer ma candidature</a>
-  <div class="scroll-cue" aria-hidden="true"><span></span></div>
+
+
+
+<section class="hero">
+
+<h2>Le recrutement nouvelle génération</h2>
+
+<p>Rejoignez notre équipe dès aujourd'hui.</p>
+
 </section>
+
+
+
+
 
 <section id="offres">
-  <p class="eyebrow">Postes ouverts</p>
-  <h2 class="section-title">Choisis ton orbite</h2>
-  <div class="cards">
-    <div class="card">
-      <div class="card-icon">&#60;/&#62;</div>
-      <h3>Développeur</h3>
-      <p>Création et amélioration des systèmes du projet. Scripts, features, optimisation.</p>
-    </div>
-    <div class="card">
-      <div class="card-icon">&#9673;</div>
-      <h3>Modérateur</h3>
-      <p>Veille sur la communauté, fait respecter les règles et accompagne les membres.</p>
-    </div>
-    <div class="card">
-      <div class="card-icon">&#9670;</div>
-      <h3>Administrateur</h3>
-      <p>Pilote la vision du projet et coordonne les équipes au quotidien.</p>
-    </div>
-  </div>
+
+<h2>Nos offres</h2>
+
+
+<div class="cards">
+
+
+<div class="card">
+
+<h3>Développeur</h3>
+
+<p>Création et amélioration de projets.</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>Modérateur</h3>
+
+<p>Aide la communauté et surveille le serveur.</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>Administrateur</h3>
+
+<p>Gestion du projet.</p>
+
+</div>
+
+
+</div>
+
+
 </section>
+
+
+
+
+
+
 
 <section id="contact">
-  <p class="eyebrow">Rejoindre l'équipage</p>
-  <h2 class="section-title">Déposer une candidature</h2>
-  <form id="candidature-form" novalidate>
-    <div class="field">
-      <label for="prenom">Prénom</label>
-      <input type="text" id="prenom" placeholder="Ton prénom" maxlength="10" required>
-    </div>
-    <div class="field">
-      <label for="age">Âge</label>
-      <input type="number" id="age" placeholder="Ton âge" min="0" max="99" oninput="if(this.value.length > 2) this.value=this.value.slice(0,2)" required>
-    </div>
-    <div class="field">
-      <label for="roblox">Pseudo Roblox</label>
-      <input type="text" id="roblox" placeholder="Ton pseudo Roblox" maxlength="30" required>
-    </div>
-    <div class="field">
-      <label for="discord">Pseudo Discord</label>
-      <input type="text" id="discord" placeholder="Ton pseudo Discord" maxlength="30" required>
-    </div>
-    <div class="field">
-      <label for="presentation">Présentation</label>
-      <textarea id="presentation" maxlength="250" placeholder="Présente-toi et dis-nous pourquoi tu veux nous rejoindre" required></textarea>
-      <p id="compteur">0/250</p>
-    </div>
-    <button type="submit" id="submit-btn">
-      <span class="btn-label">Envoyer</span>
-      <span class="btn-spinner" aria-hidden="true"></span>
-    </button>
-    <p id="form-status" role="status" aria-live="polite"></p>
-  </form>
+
+
+<h2>Déposer une candidature</h2>
+
+
+
+<form>
+
+
+
+<input
+
+type="text"
+
+id="prenom"
+
+placeholder="Prénom"
+
+maxlength="10"
+
+required>
+
+
+
+
+<input
+
+type="number"
+
+id="age"
+
+placeholder="Âge"
+
+oninput="if(this.value.length > 2) this.value=this.value.slice(0,2)"
+
+required>
+
+
+
+
+<input
+
+type="text"
+
+id="roblox"
+
+placeholder="Pseudo Roblox"
+
+maxlength="30"
+
+required>
+
+
+
+
+<input
+
+type="text"
+
+id="discord"
+
+placeholder="Pseudo Discord"
+
+maxlength="30"
+
+required>
+
+
+
+
+
+<textarea
+
+id="presentation"
+
+maxlength="250"
+
+placeholder="Présentez-vous et dites pourquoi vous souhaitez nous rejoindre"
+
+required></textarea>
+
+
+
+<p id="compteur">0/250</p>
+
+
+
+
+
+<button type="submit">
+
+Envoyer
+
+</button>
+
+
+
+
+</form>
+
+
 </section>
 
+
+
+
+
+
 <footer>
-  <span class="brand-mark small"></span>
-  <p>&copy; 2026 Nova Recruit — tous droits réservés.</p>
+
+© 2026 Nova Recruit
+
 </footer>
 
+
+
+
+
 <script src="script.js"></script>
+
+
 </body>
+
 </html>
