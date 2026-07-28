@@ -1,7 +1,8 @@
+const WEBHOOK_URL = "https://discord.com/api/webhooks/1515735682172059648/Dw2flP7ipuG10pzMvq1ExS06enrA8Ih9_-ax2PQrkGpodHrcd6rAQKnQs2eegT_RLO6w";
+
+
 const presentation = document.getElementById("presentation");
-
 const compteur = document.getElementById("compteur");
-
 
 
 presentation.addEventListener("input", function(){
@@ -13,9 +14,7 @@ presentation.addEventListener("input", function(){
 
 
 
-
 document.querySelector("form").addEventListener("submit", async function(e){
-
 
     e.preventDefault();
 
@@ -34,36 +33,82 @@ document.querySelector("form").addEventListener("submit", async function(e){
 
 
 
-    const reponse = await fetch("/candidature", {
+    const message = {
+
+        username: "Nova Recruit",
+
+        embeds: [
+
+            {
+
+                title: "📩 Nouvelle candidature",
+
+                color: 3447003,
+
+                fields: [
+
+                    {
+                        name: "👤 Prénom",
+                        value: prenom,
+                        inline: true
+                    },
+
+                    {
+                        name: "🎂 Âge",
+                        value: age,
+                        inline: true
+                    },
+
+                    {
+                        name: "🎮 Pseudo Roblox",
+                        value: roblox,
+                        inline: false
+                    },
+
+                    {
+                        name: "💬 Discord",
+                        value: discord,
+                        inline: false
+                    },
+
+                    {
+                        name: "📝 Présentation",
+                        value: presentation,
+                        inline: false
+                    }
+
+                ],
+
+                footer: {
+
+                    text: "Système de recrutement"
+
+                }
+
+            }
+
+        ]
+
+    };
 
 
-        method:"POST",
 
 
-        headers:{
+
+    const reponse = await fetch(WEBHOOK_URL, {
 
 
-            "Content-Type":"application/json"
+        method: "POST",
 
+
+        headers: {
+
+            "Content-Type": "application/json"
 
         },
 
 
-        body:JSON.stringify({
-
-
-            prenom:prenom,
-
-            age:age,
-
-            roblox:roblox,
-
-            discord:discord,
-
-            presentation:presentation
-
-
-        })
+        body: JSON.stringify(message)
 
 
     });
@@ -75,16 +120,24 @@ document.querySelector("form").addEventListener("submit", async function(e){
     if(reponse.ok){
 
 
-        alert("Votre candidature a été envoyée !");
+        alert("Candidature envoyée !");
 
 
         this.reset();
 
 
-        compteur.textContent="0/250";
+        compteur.textContent = "0/250";
 
 
     }
+
+    else{
+
+
+        alert("Erreur lors de l'envoi.");
+
+    }
+
 
 
 });
