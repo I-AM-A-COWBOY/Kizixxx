@@ -1,130 +1,80 @@
 const WEBHOOK_URL = "https://discord.com/api/webhooks/1498364123988103360/69deM-_QKIeMsbU_t91pMFhSwenILmJcWPHoANmChO0YhhVV09Q9MQGOyK9rDbQUxgqj";
 
-
+const form = document.getElementById("candidature-form");
 const presentation = document.getElementById("presentation");
 const compteur = document.getElementById("compteur");
+const submitBtn = document.getElementById("submit-btn");
+const status = document.getElementById("form-status");
 
-
-presentation.addEventListener("input", function(){
-
-    compteur.textContent = this.value.length + "/250";
-
+presentation.addEventListener("input", function () {
+  const length = this.value.length;
+  compteur.textContent = length + "/250";
+  compteur.classList.toggle("limit", length >= 230);
 });
 
+form.addEventListener("submit", async function (e) {
+  e.preventDefault();
 
+  const prenom = document.getElementById("prenom").value.trim();
+  const age = document.getElementById("age").value.trim();
+  const roblox = document.getElementById("roblox").value.trim();
+  const discord = document.getElementById("discord").value.trim();
+  const presentationValue = presentation.value.trim();
 
-document.querySelector("form").addEventListener("submit", async function(e){
+  if (!prenom || !age || !roblox || !discord || !presentationValue) {
+    status.textContent = "Merci de remplir tous les champs.";
+    status.className = "error";
+    return;
+  }
 
-    e.preventDefault();
+  const data = {
+    username: "Nova Recruit",
+    embeds: [
+      {
+        title: "📩 Nouvelle candidature",
+        description: "Une nouvelle personne a envoyé une candidature.",
+        color: 2926056,
+        fields: [
+          { name: "👤 Prénom", value: prenom, inline: true },
+          { name: "🎂 Âge", value: age, inline: true },
+          { name: "🎮 Pseudo Roblox", value: roblox, inline: false },
+          { name: "💬 Discord", value: discord, inline: false },
+          { name: "📝 Présentation", value: presentationValue, inline: false }
+        ],
+        footer: { text: "Nova Recruit" },
+        timestamp: new Date().toISOString()
+      }
+    ]
+  };
 
+  submitBtn.classList.add("loading");
+  submitBtn.disabled = true;
+  status.textContent = "";
+  status.className = "";
 
-    const prenom = document.getElementById("prenom").value;
-    const age = document.getElementById("age").value;
-    const roblox = document.getElementById("roblox").value;
-    const discord = document.getElementById("discord").value;
-    const presentation = document.getElementById("presentation").value;
-
-
-
-    const data = {
-
-        username: "Nova Recruit",
-
-        embeds: [
-
-            {
-
-                title: "📩 Nouvelle candidature",
-
-                description: "Une nouvelle personne a envoyé une candidature.",
-
-                fields: [
-
-                    {
-                        name: "👤 Prénom",
-                        value: prenom,
-                        inline: true
-                    },
-
-                    {
-                        name: "🎂 Âge",
-                        value: age,
-                        inline: true
-                    },
-
-                    {
-                        name: "🎮 Pseudo Roblox",
-                        value: roblox,
-                        inline: false
-                    },
-
-                    {
-                        name: "💬 Discord",
-                        value: discord,
-                        inline: false
-                    },
-
-                    {
-                        name: "📝 Présentation",
-                        value: presentation,
-                        inline: false
-                    }
-
-                ],
-
-                footer: {
-
-                    text: "Nova Recruit"
-
-                }
-
-            }
-
-        ]
-
-    };
-
-
-
-    fetch(WEBHOOK_URL, {
-
-        method: "POST",
-
-        headers: {
-
-            "Content-Type": "application/json"
-
-        },
-
-        body: JSON.stringify(data)
-
-    })
-    .then(response => {
-
-        if(response.ok){
-
-            alert("Candidature envoyée !");
-
-            document.querySelector("form").reset();
-
-            compteur.textContent = "0/250";
-
-        } 
-        
-        else {
-
-            alert("Erreur d'envoi.");
-
-        }
-
-    })
-    .catch(error => {
-
-        alert("Erreur de connexion.");
-
-        console.log(error);
-
+  try {
+    const response = await fetch(WEBHOOK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
     });
 
-
+    if (response.ok) {
+      status.textContent = "Candidature envoyée avec succès !";
+      status.className = "success";
+      form.reset();
+      compteur.textContent = "0/250";
+      compteur.classList.remove("limit");
+    } else {
+      status.textContent = "Erreur d'envoi. Réessaie plus tard.";
+      status.className = "error";
+    }
+  } catch (error) {
+    status.textContent = "Erreur de connexion. Vérifie ta connexion internet.";
+    status.className = "error";
+    console.log(error);
+  } finally {
+    submitBtn.classList.remove("loading");
+    submitBtn.disabled = false;
+  }
 });
