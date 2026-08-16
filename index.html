@@ -8,6 +8,8 @@
 </head>
 <body class="sombre">
 
+  <div class="particules-fond" id="particules"></div>
+
   <main class="carte" id="carte">
     <span class="eyebrow">Accès privé</span>
     <h1>Quel est ton prénom ?</h1>
@@ -37,6 +39,33 @@
     const carte = document.getElementById('carte');
     const refus = document.getElementById('refus');
 
+    // Fondu d'entrée à l'arrivée sur la page
+    requestAnimationFrame(() => document.body.classList.add('chargee'));
+
+    // Génère de petites particules flottantes en fond
+    const conteneurParticules = document.getElementById('particules');
+    const NB_PARTICULES = 26;
+
+    for (let i = 0; i < NB_PARTICULES; i++) {
+      const particule = document.createElement('span');
+      particule.className = 'particule';
+      const taille = (Math.random() * 2.5 + 1.5).toFixed(1);
+      const duree = (Math.random() * 12 + 10).toFixed(1);
+      const delai = (Math.random() * 20).toFixed(1);
+      const derive = (Math.random() * 60 - 30).toFixed(0);
+      const opacite = (Math.random() * 0.4 + 0.25).toFixed(2);
+
+      particule.style.left = Math.random() * 100 + '%';
+      particule.style.width = taille + 'px';
+      particule.style.height = taille + 'px';
+      particule.style.animationDuration = duree + 's';
+      particule.style.animationDelay = '-' + delai + 's';
+      particule.style.setProperty('--derive', derive + 'px');
+      particule.style.setProperty('--opacite', opacite);
+
+      conteneurParticules.appendChild(particule);
+    }
+
     // Normalise le texte : enlève les accents, espaces superflus et met en minuscule
     function normalise(texte) {
       return texte
@@ -53,7 +82,11 @@
       const saisie = normalise(champPrenom.value);
 
       if (saisie === PRENOM_ATTENDU) {
-        window.location.href = 'secret.html';
+        document.body.classList.remove('chargee');
+        document.body.classList.add('sortie');
+        setTimeout(() => {
+          window.location.href = 'secret.html';
+        }, 400);
       } else {
         refus.classList.add('visible');
         carte.classList.remove('secoue');
