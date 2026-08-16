@@ -194,3 +194,72 @@ input[type="text"]:focus {
   text-decoration: none;
   border-bottom: 2px solid var(--rose);
 }
+
+/* Thème sombre et pro pour la page d'accueil */
+body.sombre {
+  background: #0b0d12;
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(76, 110, 245, 0.12) 0, transparent 45%),
+    radial-gradient(circle at 85% 80%, rgba(76, 110, 245, 0.08) 0, transparent 45%);
+  color: #e7e8ee;
+}
+
+body.sombre .carte {
+  background: #12151c;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+}
+
+body.sombre .eyebrow {
+  background: rgba(76, 110, 245, 0.15);
+  color: #8fa4ff;
+}
+
+body.sombre h1 {
+  color: #f5f6fa;
+}
+
+body.sombre p.sous-titre {
+  color: #9a9fb0;
+}
+
+body.sombre input[type="text"] {
+  background: #0e1117;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #f0f1f5;
+}
+
+body.sombre input[type="text"]::placeholder {
+  color: #5b6070;
+}
+
+body.sombre input[type="text"]:focus {
+  transform: none;
+  border-color: #4c6ef5;
+  box-shadow: 0 0 0 3px rgba(76, 110, 245, 0.25);
+}
+
+body.sombre .sceau {
+  background: #4c6ef5;
+  border: 1px solid #4c6ef5;
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(76, 110, 245, 0.35);
+}
+
+body.sombre .sceau:hover {
+  background: #5d7bff;
+  transform: translateY(-2px) rotate(0deg);
+  box-shadow: 0 12px 26px rgba(76, 110, 245, 0.45);
+}
+
+body.sombre .sceau:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(76, 110, 245, 0.3);
+}
+
+body.sombre .message-refus {
+  background: rgba(255, 59, 92, 0.08);
+  border: 1px solid rgba(255, 59, 92, 0.4);
+  color: #ff6b81;
+}
