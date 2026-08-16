@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;800&family=Dancing+Script:wght@600;700&display=swap');
 
 :root {
   --jaune: #FFD23F;
@@ -262,4 +262,38 @@ body.sombre .message-refus {
   background: rgba(255, 59, 92, 0.08);
   border: 1px solid rgba(255, 59, 92, 0.4);
   color: #ff6b81;
+}
+
+body.sombre .lien-retour {
+  color: #cfd3e6;
+  border-bottom: 2px solid #4c6ef5;
+}
+
+body.sombre .lien-retour:hover {
+  color: #fff;
+}
+
+/* Filigrane signature, présent en bas à gauche sur chaque page */
+.filigrane {
+  position: fixed;
+  bottom: 16px;
+  left: 20px;
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.32);
+  letter-spacing: 0.02em;
+  z-index: 20;
+  pointer-events: none;
+  user-select: none;
+  animation: apparition 0.8s ease-out 0.3s both;
+}
+
+.filigrane .signature {
+  font-family: 'Dancing Script', cursive;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.55);
 }
